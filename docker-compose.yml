@@ -1,0 +1,25 @@
+version: '2'
+services:
+  mongo:
+    image: mongo:3.4
+    volumes:
+      - deadsimple:/data/db
+
+  app:
+    build: .
+    restart: always
+    ports:
+      - 80:4000
+      - 443:4000
+    depends_on:
+      - mongo
+    environment:
+      - NODE_ENV=production
+      - MONGO_URI=mongodb://mongo:27017/deadsimpleapp
+      - PORT=4000
+      - HOST=0.0.0.0
+
+volumes:
+  deadsimple:
+    external:
+      name: deadsimple-data

@@ -25,10 +25,25 @@ const options = {
 const instance = app(options);
 
 // Start app!
-instance.listen(config.PORT, config.HOST, err => {
+const server = instance.listen(config.PORT, config.HOST, err => {
   if (err) {
     console.error(err)
   } else {
     console.log(`> (${config.ENV}) Express.js server listening on ${config.HOST}:${config.PORT}`);
   }
+});
+
+// On termination.
+process.on('SIGINT', () => {
+  const operations = [
+    server.close(), // Sync operation, but it's not a problem.
+    mongoose.disconnect(),
+  ];
+
+  return Bluebird.all(operations)
+    .then(() => process.exit(0))
+    .catch(err => {
+      console.error(err);
+      process.exit(1);
+    });
 });

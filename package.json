@@ -4,7 +4,8 @@
   "private": true,
   "proxy": "http://localhost:4000",
   "scripts": {
-    "start": "npm run build && npm run server",
+    "prestart": "npm run build",
+    "start": "npm run server",
     "dev": "concurrently --prefix \"[{name}]\" --names \"client,server\" --kill-others \"npm run client\" \"npm run server\"",
     "server": "node server/",
     "client": "react-scripts start",

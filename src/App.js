@@ -16,8 +16,8 @@ class App extends Component {
 
   fetchMessages = async () => {
     try {
-      const messages = await axios.get('/api/v1/messages');
-      this.setState({ error: null, messages });
+      const { data } = await axios.get('/api/v1/messages');
+      this.setState({ error: null, messages: data });
     } catch (error) {
       this.setState({ error });
     }
@@ -35,6 +35,11 @@ class App extends Component {
         <p className="App-intro">
           To get started, edit <code>src/App.js</code> and save to reload.
         </p>
+        {error && (
+          <pre>
+            {error.message}
+          </pre>
+        )}
         <ul>
           {messages.map(message => (
             <li key={message._id}>
