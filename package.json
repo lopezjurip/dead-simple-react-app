@@ -4,16 +4,25 @@
   "private": true,
   "proxy": "http://localhost:4000",
   "scripts": {
-    "start": "react-scripts start",
+    "start": "npm run build && npm run server",
+    "dev": "concurrently --prefix \"[{name}]\" --names \"client,server\" --kill-others \"npm run client\" \"npm run server\"",
+    "server": "node server/",
+    "client": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
   },
   "dependencies": {
+    "axios": "^0.15.3",
+    "bluebird": "^3.4.7",
+    "express": "^4.14.1",
+    "mongoose": "^4.8.2",
+    "morgan": "^1.8.1",
     "react": "^15.4.2",
     "react-dom": "^15.4.2"
   },
   "devDependencies": {
+    "concurrently": "^3.3.0",
     "react-scripts": "0.9.0"
   }
 }
